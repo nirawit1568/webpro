@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="POST" action="{% url 'save_poll' %}">
+{% csrf_token %}
+<div class="container">
+    <h1>Create Poll</h1>
+    <br>
+    <div class="container">
+        <label>Poll name</label>
+        <input type="text" class="form-control" id="name" name="name">
+        <br>
+        <label>Poll detail</label>
+        <input type="text" class="form-control" id="detail" name="detail">
+        <br>
+        <p>Date Start (If you want to start now don't fill in blank.)</p>
+        <input type="date" id="datestart" name="datestart" class="form-control">
+        <br>
+        <p>Time Start (If you want to start now don't fill in blank.)</p>
+        <input type="time" id="start_time" name="start_time" class="form-control">
+        <br>
+        <p>Date End</p>
+        <input type="date" id="dateend" name="dateend" class="form-control">
+        <br>
+        <p>Date Time </p>
+        <input type="time" id="end_time" name="end_time" class="form-control">
+        <br>
+        <label>Password for this vote room</label>
+        <input type="text" class="form-control" id="password" name="password">
+        <br>
+        <label>Poll choices</label>
+        <div class="row">
+            <div class="col-4">               
+                <input type="text" class="form-control" id="choice1" name="choice1">
+                <br>
+            </div>
+            <div class="col-4">               
+                <input type="text" class="form-control" id="choice2" name="choice2">
+                <br>
+            </div> 
+            <div class="col-4">               
+                <input type="text" class="form-control" id="choice3" name="choice3">
+                <br>
+            </div>  
+        </div>
+    </div>
+    <center>
+    <button type="submit" class="btn btn-primary ml-3">create</button>
+    </center>
+</div>
+    
+                    
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+
+    
+    {% for p in polls %}
+        <h1>{{ p.subject }}</h1>
+        <br>
+        <p><b>Poll detail :</b> {{ p.detail }}</p>
+        <p><b>Create poll date :</b> {{ p.start_date }}</p>
+        <p><b>End poll date :</b> {{ p.end_date }}</p>
+        <p><b>End poll time :</b> {{ p.end_time }}</p>
+
+    {% endfor %}
+    <br><br>
+    <div class="container">
+        <div class="row">
+            {% for c in choice %}
+                <div class="col-4">
+                    <button type="button" class="btn btn-primary btn-lg btn-block">{{ c.subject }}</button>
+                </div>
+            {% endfor %}
+        </div>
+        <br>
+        <br>
+        <center>
+        <button type="button" class="btn btn-primary btn-lg">Vote</button>
+        </center>
+    </div>
+    
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>All poll</h1>
+<br><br>
+<div class="container">
+
+    <!-- avaliable -->
+    <div class="container">
+        <h1>Avaliable</h1>
+        <br><br>
+        <div class="row">
+            {% for p in pollnow1 %}
+            <div class="col-4">
+                <div class="container">
+                    <center>
+                    <h3>
+                    {{ p.subject }}
+                    </h3>
+                    <br>
+                    <a href="{% url 'view_detail' poll_id=p.id %}">
+                    <button class='btn btn-primary' id="{{p.id}}">View</button>
+                    </a>
+                    </center>
+                </div>
+            </div>
+            {% endfor %}
+            {% for p in pollnow2 %}
+            <div class="col-4">
+                <div class="container">
+                    <center>
+                    <h3>
+                    {{ p.subject }}
+                    </h3>
+                    <br>
+                    <a href="{% url 'view_detail' poll_id=p.id %}">
+                    <button class='btn btn-primary' id="{{p.id}}">View</button>
+                    </a>
+                    </center>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <br><br><br>
+    <!-- closed -->
+    <div class="container">
+        <h1>Closed</h1>
+        <br><br>
+        <div class="row">
+            {% for p in polllate1 %}
+            <div class="col-4">
+                <div class="container">
+                    <center>
+                    <h3>
+                    {{ p.subject }}
+                    </h3>
+                    <a href="{% url 'view_detail' poll_id=p.id %}">
+                    <button class='btn btn-primary' id="{{p.id}}">View</button>
+                    </a>
+                    </center>
+                </div>
+            </div>
+            {% endfor %}
+            {% for p in polllate2 %}
+            <div class="col-4">
+                <div class="container">
+                    <center>
+                    <h3>
+                    {{ p.subject }}
+                    </h3>
+                    <a href="{% url 'view_detail' poll_id=p.id %}">
+                    <button class='btn btn-primary' id="{{p.id}}">View</button>
+                    </a>
+                    </center>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}
