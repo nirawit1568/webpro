@@ -17,6 +17,9 @@
                     <a href="{% url 'edit_poll' poll_id=p.id %}">
                     <button class='btn btn-primary' id="{{p.id}}">Edit</button>
                     </a>
+                    <a href="{% url 'delete_poll' poll_id=p.id %}">
+                    <button class='btn btn-primary' id="{{p.id}}">Delete</button>
+                    </a>
                     </center>
                 </div>
             </div>

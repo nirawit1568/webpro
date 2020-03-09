@@ -15,10 +15,11 @@ def home(request):
 
     polll = Poll.objects.all()
     currentDT = datetime.datetime.now()
-    pollnow1 = Poll.objects.filter(end_date__gt=currentDT)
+    pollnow1 = (Poll.objects.filter(end_date__gt=currentDT))
     pollnow2 = Poll.objects.filter(end_date=currentDT,end_time__gte=currentDT,start_time__lte=currentDT)
     polllate1 = Poll.objects.filter(end_date__lt=currentDT)
     polllate2 = Poll.objects.filter(end_date=currentDT,end_time__lt=currentDT)
+    
     context={
         'polllate1':polllate1,
         'polllate2':polllate2,
@@ -83,12 +84,14 @@ def save_poll(request):
     return redirect('home')
 
 def view_detail(request,poll_id):
+    # check vote already
     userr = request.user
     have = Pollvote.objects.filter(poll_id=poll_id,user_id=userr.id)
     polls = Poll.objects.filter(id=poll_id)
     pollss = Poll.objects.get(id=poll_id)
     choice = pollss.pollchoice_set.all()
 
+    # total vote 
     poll = Pollchoice.objects.filter(polls=poll_id)
     choice1 = poll[0].poll_choice_id
     choice2 = poll[1].poll_choice_id
@@ -102,6 +105,23 @@ def view_detail(request,poll_id):
     count2 = (Pollvote.objects.filter(poll_id=poll_id,poll_choice_id=choice2)).count()
     count3 = (Pollvote.objects.filter(poll_id=poll_id,poll_choice_id=choice3)).count()
 
+    # vote closed
+    currentDT = datetime.datetime.now()
+    polllate1 = Poll.objects.filter(end_date__lt=currentDT)
+    polllate2 = Poll.objects.filter(end_date=currentDT,end_time__lt=currentDT)
+    close = 0
+    for i in range (0,len(polllate1)):
+        if polllate1[i].id==poll_id:
+            close=close+1
+        else:
+            close=close+0
+
+    for i in range (0,len(polllate2)):
+        if polllate2[i].id==poll_id:
+            close=close+1
+        else:
+            close=close+0
+
     context={
         'polls':polls,
         'choice':choice,
@@ -110,12 +130,14 @@ def view_detail(request,poll_id):
         'count3':count3,
         'choicename1':choicename1,
         'choicename2':choicename2,
-        'choicename3':choicename3
-
+        'choicename3':choicename3,
     }
 
     if have:
         context['error'] = 'You had voted already!'
+        return render(request, template_name='poll/view_detail.html', context=context)
+    elif close>0:
+        context['closed'] = 'This poll is closed.'
         return render(request, template_name='poll/view_detail.html', context=context)
     else:
         return render(request, template_name='poll/view_detail.html', context=context)
@@ -166,3 +188,9 @@ def edit_poll(request,poll_id):
         'choice':choice
     }
     return render(request, template_name='poll/edit_poll.html',context=context)
+
+
+def delete_poll(request,poll_id):
+    poll = Poll.objects.get(id=poll_id)
+    poll.delete()
+    return redirect('my_poll')
