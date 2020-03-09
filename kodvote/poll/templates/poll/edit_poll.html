@@ -1,37 +1,42 @@
 {% extends "base.html" %}
 {% block content %}
-<form method="POST" action="{% url 'save_poll' %}">
+    {% for p in poll %}
+        <form method="POST" action="{% url 'edit_poll' poll_id=p.id %}">
+    {% endfor %}
 {% csrf_token %}
-
 <div class="container">
-    <h1>Create Poll</h1>
+    <h1>Edit poll</h1>
     <br>
     <div class="container">
         <label>Poll name</label>
-        <input type="text" class="form-control" id="name" name="name">
+        {% for p in poll %}
+        <input type="text" class="form-control" id="name" name="name" value='{{ p.subject }}'>
         <br>
         <label>Poll detail</label>
-        <input type="text" class="form-control" id="detail" name="detail">
+        <input type="text" class="form-control" id="detail" name="detail" value='{{ p.detail }}'>
         <br>
         <p>Date Start (If you want to start now don't fill in blank.)</p>
-        <input type="date" id="datestart" name="datestart" class="form-control">
+        <input type="date" id="datestart" name="datestart" class="form-control" value='{{ p.start_date }}'>
         <br>
         <p>Time Start (If you want to start now don't fill in blank.)</p>
-        <input type="time" id="start_time" name="start_time" class="form-control">
+        <input type="time" id="start_time" name="start_time" class="form-control" value='{{ p.start_time }}'>
         <br>
         <p>Date End</p>
-        <input type="date" id="dateend" name="dateend" class="form-control">
+        <input type="date" id="dateend" name="dateend" class="form-control" value='{{ p.end_date }}'>
         <br>
         <p>Date Time </p>
-        <input type="time" id="end_time" name="end_time" class="form-control">
+        <input type="time" id="end_time" name="end_time" class="form-control" value='{{ p.end_time }}'>
         <br>
         <label>Password for this vote room</label>
-        <input type="text" class="form-control" id="password" name="password">
+        <input type="text" class="form-control" id="password" name="password" value='{{ p.password }}'>
         <br>
+        {% endfor %}
         <label>Poll choices</label>
         <div class="row">
             <div class="col-4">               
+                {% comment %} {% for c in choice %} {% endcomment %}
                 <input type="text" class="form-control" id="choice1" name="choice1">
+                {% comment %} {% endfor %} {% endcomment %}
                 <br>
             </div>
             <div class="col-4">               
@@ -48,4 +53,7 @@
     <button type="submit" class="btn btn-primary ml-3">create</button>
     </center>
 </div>
+    
+                    
+
 {% endblock %}

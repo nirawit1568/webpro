@@ -11,7 +11,7 @@ class Poll(models.Model):
     detail = models.TextField(null=True, blank=True)
     # picture = models.models.ImageField(_(""), upload_to=None, height_field=None, width_field=None, max_length=None)
     start_date = models.DateField(auto_now=False, auto_now_add=True)
-    start_time = models.TimeField(auto_now=True,null=True)
+    start_time = models.TimeField(auto_now=False,null=True,auto_now_add=True)
     end_date = models.DateField(auto_now=False, auto_now_add=False)
     end_time = models.TimeField(auto_now=False,null=True)
     password = models.CharField(max_length=10)
