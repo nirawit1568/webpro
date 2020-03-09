@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
+# from organize.models import User
 
 # Create your views here.
 
@@ -43,17 +44,26 @@ def sign_up(request):
     return render(request, template_name='sign_up.html')
 
 def add_user(request):
-
+    context = {}
     if request.method == 'POST':
-        user = User.objects.create_user(
-            request.POST.get('username'),
-            request.POST.get('Email'),
-            request.POST.get('password')
-        )
-        user.first_name = request.POST.get('Firstname')
-        user.last_name = request.POST.get('Lastname')
-        user.save()
-        return redirect('login')
+
+        new = request.POST.get('username')
+        guser = User.objects.filter(username=new)
+        print(guser)
+        if guser:
+            context['error'] = 'Username have already!'
+            print('111111111111')
+            return render(request, template_name='sign_up.html', context=context)
+        else:
+            user = User.objects.create_user(
+                request.POST.get('username'),
+                request.POST.get('Email'),
+                request.POST.get('password')
+            )
+            user.first_name = request.POST.get('Firstname')
+            user.last_name = request.POST.get('Lastname')
+            user.save()
+            return redirect('login')
     else:
         return redirect('login')
 

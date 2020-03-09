@@ -3,11 +3,11 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from poll.models import Poll, Pollchoice
+from poll.models import Poll, Pollchoice,Pollvote
 from django.contrib.auth.models import User
-from organize.models import User
+# from organize.models import User
 import datetime
-from django.core.exceptions import ObjectDoesNotExist
+
 
 # Create your views here.
 
@@ -55,6 +55,7 @@ def save_poll(request):
             password=request.POST.get('password'),
             start_time=request.POST.get('start_time'),
             end_time=request.POST.get('end_time'),
+            create_by_id=userr.id
         )
         
 
@@ -71,15 +72,18 @@ def save_poll(request):
         )
 
         polll = Poll.objects.get(subject=title)
+
         c1 = Pollchoice.objects.get(subject=choice1.subject)
         c1.polls.add(polll)
         c2 = Pollchoice.objects.get(subject=choice2.subject)
         c2.polls.add(polll)
         c3 = Pollchoice.objects.get(subject=choice3.subject)
         c3.polls.add(polll)
+
     return redirect('home')
 
 def view_detail(request,poll_id):
+    user = request.user
     polls = Poll.objects.filter(id=poll_id)
     pollss = Poll.objects.get(id=poll_id)
     choice = pollss.pollchoice_set.all()
@@ -89,7 +93,27 @@ def view_detail(request,poll_id):
     }
     return render(request, template_name='poll/view_detail.html', context=context)
 
-# def my_poll(request):
+def my_poll(request):
+    user = request.user
+    allpoll = Poll.objects.filter(create_by_id=user.id)
+    context={
+        'allpoll':allpoll
+    }
 
-#     context={}
-#     return render(request, template_name='poll/view_detail.html', context=context)
+    return render(request, template_name='poll/my_poll.html', context=context)
+
+
+def poll_vote(request,poll_id):
+
+    userr = request.user
+    if request.method == 'POST':
+        poll_choice_id = request.POST.get('choice_no',None)
+        poll_vote=Pollvote.objects.create(
+            poll_id=poll_id,
+            poll_choice_id=poll_choice_id,
+            user_id=userr.id
+        )
+    return redirect('home')
+
+def edit_poll(request,poll_id):
+    

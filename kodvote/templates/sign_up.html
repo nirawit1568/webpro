@@ -3,6 +3,7 @@
     <div class="container">
         <h1>Sign up</h1>
         <br/><br/>
+        {% if error %}<p class="text-danger">{{ error }}</p>{% endif %}
         <form method="POST" action="{% url 'add_user' %}">
             {% csrf_token %}
             <div class="form-group">

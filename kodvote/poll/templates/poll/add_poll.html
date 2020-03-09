@@ -2,6 +2,7 @@
 {% block content %}
 <form method="POST" action="{% url 'save_poll' %}">
 {% csrf_token %}
+
 <div class="container">
     <h1>Create Poll</h1>
     <br>

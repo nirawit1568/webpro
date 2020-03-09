@@ -1,6 +1,8 @@
-from django.db import models
-from organize.models import User
 
+
+from django.db import models
+from django.contrib.auth.models import User
+# from organize.models import User
 
 
 class Poll(models.Model):
@@ -15,7 +17,7 @@ class Poll(models.Model):
     password = models.CharField(max_length=10)
     create_by = models.IntegerField()
     create_date = models.DateField(auto_now=True)
-    create_by = models.ForeignKey(User, on_delete=models.CASCADE ,null=False)
+    create_by = models.ForeignKey(User ,on_delete=models.CASCADE, null=True)
 
 class Pollchoice(models.Model):
     poll_choice_id = models.IntegerField(primary_key=True)
@@ -28,4 +30,3 @@ class Pollvote(models.Model):
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE, null=True)
     poll_choice = models.ForeignKey(Pollchoice, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-

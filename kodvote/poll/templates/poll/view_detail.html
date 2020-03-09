@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-
-    
+{% for p in polls %}
+<form method="POST" action="{% url 'poll_vote' poll_id=p.id %}">
+{% endfor %}
+{% csrf_token %}
     {% for p in polls %}
         <h1>{{ p.subject }}</h1>
         <br>
@@ -22,8 +24,14 @@
         </div>
         <br>
         <br>
+        <select class="form-control" id="choice_no" name="choice_no" >
+            <option value=''>---เลือก---</option>
+            {% for c in choice %}
+                <option value= '{{c.poll_choice_id}}'> {{ c.subject }} </option>
+            {% endfor %}
+        </select>
         <center>
-        <button type="button" class="btn btn-primary btn-lg">Vote</button>
+        <button type="submit" class="btn btn-primary btn-lg">Vote</button>
         </center>
     </div>
     
