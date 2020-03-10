@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<form method="POST" action="{% url 'save_poll' %}">
+<form method="POST" action="{% url 'save_poll' %}" encType="multipart/form-data">
 {% csrf_token %}
 
 <div class="container">
@@ -9,6 +9,9 @@
     <div class="container">
         <label>Poll name</label>
         <input type="text" class="form-control" id="name" name="name">
+        <br>
+        <label>Image</label>
+        <input type="file" name="document" id="document">
         <br>
         <label>Poll detail</label>
         <input type="text" class="form-control" id="detail" name="detail">

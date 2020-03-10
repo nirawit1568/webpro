@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
     {% for p in poll %}
-        <form method="POST" action="{% url 'edit_poll' poll_id=p.id %}">
+        <form method="POST" action="{% url 'edit_poll' poll_id=p.id %}" encType="multipart/form-data">
     {% endfor %}
 {% csrf_token %}
 <div class="container">
@@ -12,20 +12,23 @@
         {% for p in poll %}
         <input type="text" class="form-control" id="name" name="name" value='{{ p.subject }}'>
         <br>
+        <label>Image</label>
+        <input type="file" name="document" id="document">
+        <br><br>
         <label>Poll detail</label>
         <input type="text" class="form-control" id="detail" name="detail" value='{{ p.detail }}'>
         <br>
         <p>Date Start (If you want to start now don't fill in blank.)</p>
-        <input type="date" id="datestart" name="datestart" class="form-control" value='{{ p.start_date }}'>
+        <input type="date" id="datestart" name="datestart" class="form-control" value= {{ p.start_date|date:'Y-m-d'  }}>
         <br>
         <p>Time Start (If you want to start now don't fill in blank.)</p>
-        <input type="time" id="start_time" name="start_time" class="form-control" value='{{ p.start_time }}'>
+        <input type="time" id="start_time" name="start_time" class="form-control" value= {{ p.start_time|date:'H:i'  }}>
         <br>
         <p>Date End</p>
-        <input type="date" id="dateend" name="dateend" class="form-control" value='{{ p.end_date }}'>
+        <input type="date" id="dateend" name="dateend" class="form-control" value= {{ p.end_date|date:'Y-m-d'  }}>
         <br>
         <p>Date Time </p>
-        <input type="time" id="end_time" name="end_time" class="form-control" value='{{ p.end_time }}'>
+        <input type="time" id="end_time" name="end_time" class="form-control" value= {{ p.end_time|date:'H:i'  }}>
         <br>
         <label>Password for this vote room</label>
         <input type="text" class="form-control" id="password" name="password" value='{{ p.password }}'>
@@ -50,7 +53,7 @@
         </div>
     </div>
     <center>
-    <button type="submit" class="btn btn-primary ml-3">create</button>
+    <button type="submit" class="btn btn-primary ml-3">Update</button>
     </center>
 </div>
     

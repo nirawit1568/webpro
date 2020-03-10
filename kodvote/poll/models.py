@@ -9,7 +9,7 @@ class Poll(models.Model):
 
     subject = models.TextField(null=True, blank=True)
     detail = models.TextField(null=True, blank=True)
-    # picture = models.models.ImageField(_(""), upload_to=None, height_field=None, width_field=None, max_length=None)
+    picture = models.FileField(blank=True)
     start_date = models.DateField(auto_now=False, auto_now_add=True)
     start_time = models.TimeField(auto_now=False,null=True,auto_now_add=True)
     end_date = models.DateField(auto_now=False, auto_now_add=False)
@@ -22,7 +22,7 @@ class Poll(models.Model):
 class Pollchoice(models.Model):
     poll_choice_id = models.IntegerField(primary_key=True)
     subject = models.CharField(max_length=50)
-    # image = models.models.ImageField(_(""), upload_to=None, height_field=None, width_field=None, max_length=None)
+    image = models.FileField(blank=True)
     polls = models.ManyToManyField(Poll)
 
 class Pollvote(models.Model):

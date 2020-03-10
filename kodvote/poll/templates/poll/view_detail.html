@@ -87,12 +87,13 @@
         </div>
         <br>
         <br>
-        <select class="form-control" id="choice_no" name="choice_no" >
-            <option value=''>---เลือก---</option>
+        <select class="form-control" id="choice_no" name="choice_no" style="background-color:silver;">
+            <option value=''>---------- Choose choice here ----------</option>
             {% for c in choice %}
                 <option value= '{{c.poll_choice_id}}'> {{ c.subject }} </option>
             {% endfor %}
         </select>
+        <br>
         <center>
         <button type="submit" class="btn btn-primary btn-lg">Vote</button>
         </center>

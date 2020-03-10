@@ -18,6 +18,10 @@ from django.urls import path, include
 
 from organize import views
 
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('organize.urls')),
@@ -27,3 +31,5 @@ urlpatterns = [
     path('organize/', include('organize.urls')),
     path('poll/', include('poll.urls'))
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -15,10 +15,10 @@
                     <button class='btn btn-primary' id="{{p.id}}">View</button>
                     </a>
                     <a href="{% url 'edit_poll' poll_id=p.id %}">
-                    <button class='btn btn-primary' id="{{p.id}}">Edit</button>
+                    <button class='btn btn-warning' id="{{p.id}}">Edit</button>
                     </a>
                     <a href="{% url 'delete_poll' poll_id=p.id %}">
-                    <button class='btn btn-primary' id="{{p.id}}">Delete</button>
+                    <button class='btn btn-danger' id="{{p.id}}">Delete</button>
                     </a>
                     </center>
                 </div>
