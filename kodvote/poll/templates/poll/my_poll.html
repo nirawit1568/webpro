@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
     <h1>My poll</h1>
+    {% if success %}<p class="text-success">{{ success }}</p>{% endif %}
     <div class="container">
-        <h1>Avaliable</h1>
         <br><br>
         <div class="row">
             {% for p in allpoll %}
@@ -26,4 +26,5 @@
             {% endfor %}
         </div>
     </div>
+    
 {% endblock %}

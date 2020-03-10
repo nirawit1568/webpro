@@ -17,13 +17,16 @@
                     <h3>
                     {{ p.subject }}
                     </h3>
-                    {% comment %} <img src="{% static 'media/p.picture' %}"/>
-                    <img src= '"{%'|add:"static" |add:"'media/" |add:{{p.picture}} |add:'"%}"' /> {% endcomment %}
-                    <br>
                     
-                    <br>
+                    {% comment %} concat string {% endcomment %}
+                    {% with 'media/'|add:p.picture as image_static %}
+                        <img src={% static image_static %} style="width:240px;height:250px"/>
+                    {% endwith %}
+                    {% comment %} concat string {% endcomment %}
+                    <br><br>
                     <a href="{% url 'view_detail' poll_id=p.id %}">
                     <button class='btn btn-primary' id="{{p.id}}">View</button>
+                    <br><br><br>
                     </a>
                     </center>
                 </div>

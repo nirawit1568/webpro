@@ -20,7 +20,6 @@ def home(request):
     pollnow2 = Poll.objects.filter(end_date=currentDT,end_time__gte=currentDT,start_time__lte=currentDT)
     polllate1 = Poll.objects.filter(end_date__lt=currentDT)
     polllate2 = Poll.objects.filter(end_date=currentDT,end_time__lt=currentDT)
-
     context={
         'polllate1':polllate1,
         'polllate2':polllate2,
@@ -274,8 +273,10 @@ def poll_vote(request,poll_id):
 def edit_poll(request,poll_id):
     poll = Poll.objects.filter(id=poll_id)
     epoll = Poll.objects.get(id=poll_id)
+    context={
+        'poll':poll,
+    }
 
-    choice ={}
     if request.method == 'POST':
         try:
             epoll.subject=request.POST.get('name')
@@ -289,7 +290,8 @@ def edit_poll(request,poll_id):
             epoll.save()
             uploaded_file = request.FILES['document']
             fs = FileSystemStorage()
-            s.save(uploaded_file.name,uploaded_file)
+            fs.save(uploaded_file.name,uploaded_file)
+            
 
         except:
             epoll.subject=request.POST.get('name')
@@ -301,14 +303,15 @@ def edit_poll(request,poll_id):
             epoll.end_time=request.POST.get('end_time')
             epoll.save()
 
-    context={
-        'poll':poll,
-        'choice':choice
-    }
+        context['success'] = 'Edit success!'
+
+    
     return render(request, template_name='poll/edit_poll.html',context=context)
 
 
 def delete_poll(request,poll_id):
+    context={}
     poll = Poll.objects.get(id=poll_id)
     poll.delete()
-    return redirect('my_poll')
+    context['success'] = 'Delete poll success!'
+    return render(request, template_name='poll/my_poll.html',context=context)

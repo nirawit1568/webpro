@@ -5,10 +5,11 @@
     {% endfor %}
 {% csrf_token %}
 <div class="container">
+    {% if success %}<p class="text-success">{{ success }}</p>{% endif %}
     <h1>Edit poll</h1>
     <br>
     <div class="container">
-        <label>Poll name</label>
+        <label>Poll name </label>
         {% for p in poll %}
         <input type="text" class="form-control" id="name" name="name" value='{{ p.subject }}'>
         <br>
@@ -37,9 +38,7 @@
         <label>Poll choices</label>
         <div class="row">
             <div class="col-4">               
-                {% comment %} {% for c in choice %} {% endcomment %}
                 <input type="text" class="form-control" id="choice1" name="choice1">
-                {% comment %} {% endfor %} {% endcomment %}
                 <br>
             </div>
             <div class="col-4">               

@@ -9,7 +9,7 @@ class Poll(models.Model):
 
     subject = models.TextField(null=True, blank=True)
     detail = models.TextField(null=True, blank=True)
-    picture = models.FileField(blank=True)
+    picture = models.CharField(max_length=50)
     start_date = models.DateField(auto_now=False, auto_now_add=True)
     start_time = models.TimeField(auto_now=False,null=True,auto_now_add=True)
     end_date = models.DateField(auto_now=False, auto_now_add=False)
