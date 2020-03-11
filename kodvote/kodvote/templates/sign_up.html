@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css'%}">
+    <link href="https://fonts.googleapis.com/css?family=Bree+Serif&display=swap" rel="stylesheet">
+</head>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="card-body">
+                    <h4 class="card-title text-center">Sign Up</h4>
+                    {% if error %}<p class="text-danger">{{ error }}</p>{% endif %}
+                    <form method="POST" action="{% url 'add_user' %}">
+                        {% csrf_token %}
+                        <div class="form-label-group">
+                            <input type="text" id="username" class="form-control" placeholder="username" name="username"
+                                value="{{username}}" required autofocus>
+                        </div>
+                        <br>
+                        <div class="form-label-group">
+                            <input type="password" id="password" class="form-control" placeholder="Password"
+                                name="password" value="{{password}}" required>
+                        </div>
+                        <br>
+                        <div class="form-label-group">
+                            <input type="text" id="Firstname" class="form-control" placeholder="Firstname"
+                                name="Firstname" value="{{Firstname}}" required autofocus>
+                        </div>
+                        <br>
+                        <div class="form-label-group">
+                            <input type="text" id="Lastname" class="form-control" placeholder="Lastname" name="Lastname"
+                                value="{{Lastname}}" required>
+                        </div>
+                        <br>
+                        <div class="form-label-group">
+                            <input type="text" id="Email" class="form-control" placeholder="Email" name="Email"
+                                value="{{Email}}" required autofocus>
+                        </div>
+                        <br>
+
+                        <button type="submit" class="btn btn-lg btn-primary btn-block text-uppercase">Create New
+                            User</button></a>
+                    </form>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
