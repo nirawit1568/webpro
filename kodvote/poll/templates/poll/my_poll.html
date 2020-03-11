@@ -23,11 +23,11 @@
                     {% if p.picture %}
                     {% comment %} concat string {% endcomment %}
                     {% with 'media/'|add:p.picture as image_static %}
-                    <img src={% static image_static %} style="width:240px;height:250px" />
+                    <img src={% static image_static %} style="width:270px;height:250px" />
                     {% endwith %}
                     {% comment %} concat string {% endcomment %}
                     {% else %}
-                    <img src="{% static 'media/default.png' %}" style="width:240px;height:250px" />
+                    <img src="{% static 'media/default.png' %}" style="width:270px;height:250px" />
                     {% endif %}
                     <br><br>
                     <a href="{% url 'view_detail' poll_id=p.id %}">

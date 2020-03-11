@@ -16,8 +16,8 @@ def home(request):
 
     polll = Poll.objects.all()
     currentDT = datetime.datetime.now()
-    pollnow1 = (Poll.objects.filter(end_date__gt=currentDT))
-    pollnow2 = Poll.objects.filter(end_date=currentDT,end_time__gte=currentDT,start_time__lte=currentDT)
+    pollnow1 = Poll.objects.filter(end_date__gt=currentDT)
+    pollnow2 = Poll.objects.filter(end_date__gte=currentDT,end_time__gte=currentDT,start_time__lte=currentDT)
     polllate1 = Poll.objects.filter(end_date__lt=currentDT)
     polllate2 = Poll.objects.filter(end_date=currentDT,end_time__lt=currentDT)
     context={
