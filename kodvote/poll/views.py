@@ -45,33 +45,61 @@ def save_poll(request):
     if request.method == 'POST':
         title=request.POST.get('name')
         try:
-            poll = Poll.objects.create(
-            subject=request.POST.get('name'),
-            detail=request.POST.get('detail'),
-            start_date=request.POST.get('datestart'),
-            end_date=request.POST.get('dateend'),
-            password=request.POST.get('password'),
-            start_time=request.POST.get('start_time'),
-            end_time=request.POST.get('end_time'),
-            create_by_id=userr.id,
-            picture=request.FILES['document'].name  
-        )
-            uploaded_file = request.FILES['document']
-            fs = FileSystemStorage()
-            fs.save(uploaded_file.name,uploaded_file)
+            try:
+                poll = Poll.objects.create(
+                subject=request.POST.get('name'),
+                detail=request.POST.get('detail'),
+                start_date=request.POST.get('datestart'),
+                end_date=request.POST.get('dateend'),
+                password=request.POST.get('password'),
+                start_time=request.POST.get('start_time'),
+                end_time=request.POST.get('end_time'),
+                create_by_id=userr.id,
+                picture=request.FILES['document'].name  
+                )
+                uploaded_file = request.FILES['document']
+                fs = FileSystemStorage()
+                fs.save(uploaded_file.name,uploaded_file)
+                
+            except:
+                poll = Poll.objects.create(
+                subject=request.POST.get('name'),
+                detail=request.POST.get('detail'),
+                start_date=request.POST.get('datestart'),
+                end_date=request.POST.get('dateend'),
+                start_time=request.POST.get('start_time'),
+                end_time=request.POST.get('end_time'),
+                create_by_id=userr.id,
+                picture=request.FILES['document'].name  
+                )
+                uploaded_file = request.FILES['document']
+                fs = FileSystemStorage()
+                fs.save(uploaded_file.name,uploaded_file)
+
 
         except:
-            poll = Poll.objects.create(
-            subject=request.POST.get('name'),
-            detail=request.POST.get('detail'),
-            start_date=request.POST.get('datestart'),
-            end_date=request.POST.get('dateend'),
-            password=request.POST.get('password'),
-            start_time=request.POST.get('start_time'),
-            end_time=request.POST.get('end_time'),
-            create_by_id=userr.id
-        )
 
+            try:
+                poll = Poll.objects.create(
+                subject=request.POST.get('name'),
+                detail=request.POST.get('detail'),
+                start_date=request.POST.get('datestart'),
+                end_date=request.POST.get('dateend'),
+                password=request.POST.get('password'),
+                start_time=request.POST.get('start_time'),
+                end_time=request.POST.get('end_time'),
+                create_by_id=userr.id
+                )
+            except:
+                poll = Poll.objects.create(
+                subject=request.POST.get('name'),
+                detail=request.POST.get('detail'),
+                start_date=request.POST.get('datestart'),
+                end_date=request.POST.get('dateend'),
+                start_time=request.POST.get('start_time'),
+                end_time=request.POST.get('end_time'),
+                create_by_id=userr.id
+                )
         
         
 
@@ -103,14 +131,14 @@ def save_poll(request):
 def view_detail(request,poll_id):
 
     check = Poll.objects.filter(id=poll_id)
-    if check[0].password:
+    if check[0].password: # check password have or not'have
 
         context={
             'check':check,
         }
         return render(request, template_name='poll/check_password.html', context=context)
 
-    else:
+    else: #not have password
 
         # check vote already
         userr = request.user
@@ -172,6 +200,8 @@ def view_detail(request,poll_id):
         
 
 
+
+# if poll have password render this view
 
 def view_password(request,poll_id):
     context={}
@@ -247,7 +277,7 @@ def view_password(request,poll_id):
 
     
 
-
+@login_required
 def my_poll(request):
     user = request.user
     allpoll = Poll.objects.filter(create_by_id=user.id)

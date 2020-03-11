@@ -2,101 +2,131 @@
 {% load static %}
 {% block content %}
 
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/view_detail.css'%}">
+    <link href="https://fonts.googleapis.com/css?family=Bree+Serif&display=swap" rel="stylesheet">
+</head>
+
 {% comment %} vote already {% endcomment %}
 {% if error %}<p class="text-danger">{{ error }}</p>
 
-    {% for p in polls %}
-        <h1>{{ p.subject }}</h1>
-        <br>
-        {% with 'media/'|add:p.picture as image_static %}
-        <img src={% static image_static %} style="width:250px;height:290px"/>
-        {% endwith %}
-        <br>
-        <p><b>Poll detail :</b> {{ p.detail }}</p>
-        <p><b>Create poll date :</b> {{ p.start_date }}</p>
-        <p><b>End poll date :</b> {{ p.end_date }}</p>
-        <p><b>End poll time :</b> {{ p.end_time }}</p>
-    {% endfor %}
-        <br><br>
-        <h3>Total Vote:</h3>
-        <br>
-        <div class="container">
-        <center>
-        <button type="button" class="btn btn-primary">
-            {{ choicename1 }} <span class="badge badge-light">{{ count1 }}</span>
-        </button>
+{% for p in polls %}
 
-        <button type="button" class="btn btn-primary">
-            {{ choicename2 }} <span class="badge badge-light">{{ count2 }}</span>
-        </button>
+<div class="card-body">
+    <h1>{{ p.subject }}</h1>
+    <br>
 
-        <button type="button" class="btn btn-primary">
-            {{ choicename3 }} <span class="badge badge-light">{{ count3 }}</span>
-        </button>
-        </center>
-        </div>
-{% comment %} vote closed {% endcomment %}
-    {% elif closed %}
-        <p class="text-danger">{{ closed }}</p>
-        {% for p in polls %}
-        <h1>{{ p.subject }}</h1>
-        <br>
-        {% with 'media/'|add:p.picture as image_static %}
-            <img src={% static image_static %} style="width:250px;height:290px"/>
-        {% endwith %}
-        <br>
-        <p><b>Poll detail :</b> {{ p.detail }}</p>
-        <p><b>Create poll date :</b> {{ p.start_date }}</p>
-        <p><b>End poll date :</b> {{ p.end_date }}</p>
-        <p><b>End poll time :</b> {{ p.end_time }}</p>
-        {% endfor %}
-        <br><br>
-        <h3>Total Vote:</h3>
-        <br>
-        <div class="container">
-        <center>
-        <button type="button" class="btn btn-primary">
-            {{ choicename1 }} <span class="badge badge-light">{{ count1 }}</span>
-        </button>
-
-        <button type="button" class="btn btn-primary">
-            {{ choicename2 }} <span class="badge badge-light">{{ count2 }}</span>
-        </button>
-
-        <button type="button" class="btn btn-primary">
-            {{ choicename3 }} <span class="badge badge-light">{{ count3 }}</span>
-        </button>
-        </center>
-        </div>
-{% comment %} Not vote {% endcomment %}
+    {% if p.picture %}
+    {% comment %} concat string {% endcomment %}
+    {% with 'media/'|add:p.picture as image_static %}
+    <img src={% static image_static %} style="width:240px;height:250px" />
+    {% endwith %}
+    {% comment %} concat string {% endcomment %}
     {% else %}
-    {% for p in polls %}
-    <form method="POST" action="{% url 'poll_vote' poll_id=p.id %}">
+    <img src="{% static 'media/default.png' %}" style="width:240px;height:250px" />
+    {% endif %}
+
+    <br>
+    <p><b>Poll detail :</b> {{ p.detail }}</p>
+    <p><b>Create poll date :</b> {{ p.start_date }}</p>
+    <p><b>End poll date :</b> {{ p.end_date }}</p>
+    <p><b>End poll time :</b> {{ p.end_time }}</p>
+</div>
+
+{% endfor %}
+<br><br>
+<h3>Total Vote:</h3>
+<br>
+<div class="container">
+    <center>
+        <button type="button" class="btn btn-primary">
+            {{ choicename1 }} <span class="badge badge-light">{{ count1 }}</span>
+        </button>
+
+        <button type="button" class="btn btn-primary">
+            {{ choicename2 }} <span class="badge badge-light">{{ count2 }}</span>
+        </button>
+
+        <button type="button" class="btn btn-primary">
+            {{ choicename3 }} <span class="badge badge-light">{{ count3 }}</span>
+        </button>
+    </center>
+</div>
+{% comment %} vote closed {% endcomment %}
+{% elif closed %}
+<p class="text-danger">{{ closed }}</p>
+{% for p in polls %}
+<h1>{{ p.subject }}</h1>
+<br>
+{% if p.picture %}
+{% comment %} concat string {% endcomment %}
+{% with 'media/'|add:p.picture as image_static %}
+<img src={% static image_static %} style="width:240px;height:250px" />
+{% endwith %}
+{% comment %} concat string {% endcomment %}
+{% else %}
+<img src="{% static 'media/default.png' %}" style="width:240px;height:250px" />
+{% endif %}
+<br>
+<p><b>Poll detail :</b> {{ p.detail }}</p>
+<p><b>Create poll date :</b> {{ p.start_date }}</p>
+<p><b>End poll date :</b> {{ p.end_date }}</p>
+<p><b>End poll time :</b> {{ p.end_time }}</p>
+{% endfor %}
+<br><br>
+<h3>Total Vote:</h3>
+<br>
+<div class="container">
+    <center>
+        <button type="button" class="btn btn-primary">
+            {{ choicename1 }} <span class="badge badge-light">{{ count1 }}</span>
+        </button>
+
+        <button type="button" class="btn btn-primary">
+            {{ choicename2 }} <span class="badge badge-light">{{ count2 }}</span>
+        </button>
+
+        <button type="button" class="btn btn-primary">
+            {{ choicename3 }} <span class="badge badge-light">{{ count3 }}</span>
+        </button>
+    </center>
+</div>
+{% comment %} Not vote {% endcomment %}
+{% else %}
+{% for p in polls %}
+<form method="POST" action="{% url 'poll_vote' poll_id=p.id %}">
     {% endfor %}
     {% csrf_token %}
 
-    
+
     {% for p in polls %}
-        <h1>{{ p.subject }}</h1>
-        <br>
-        {% with 'media/'|add:p.picture as image_static %}
-        <img src={% static image_static %} style="width:250px;height:290px"/>
-        {% endwith %}
-        <br>
-        <p><b>Poll detail :</b> {{ p.detail }}</p>
-        <p><b>Create poll date :</b> {{ p.start_date }}</p>
-        <p><b>End poll date :</b> {{ p.end_date }}</p>
-        <p><b>End poll time :</b> {{ p.end_time }}</p>
-        <br>
+    <h1>{{ p.subject }}</h1>
+    <br>
+    {% if p.picture %}
+    {% comment %} concat string {% endcomment %}
+    {% with 'media/'|add:p.picture as image_static %}
+    <img src={% static image_static %} style="width:240px;height:250px" />
+    {% endwith %}
+    {% comment %} concat string {% endcomment %}
+    {% else %}
+    <img src="{% static 'media/default.png' %}" style="width:240px;height:250px" />
+    {% endif %}
+    <br>
+    <p><b>Poll detail :</b> {{ p.detail }}</p>
+    <p><b>Create poll date :</b> {{ p.start_date }}</p>
+    <p><b>End poll date :</b> {{ p.end_date }}</p>
+    <p><b>End poll time :</b> {{ p.end_time }}</p>
+    <br>
     {% endfor %}
 
     <br><br>
     <div class="container">
         <div class="row">
             {% for c in choice %}
-                <div class="col-4">
-                    <button type="button" class="btn btn-primary btn-lg btn-block">{{ c.subject }}</button>
-                </div>
+            <div class="col-4">
+                <button type="button" class="btn btn-primary btn-lg btn-block">{{ c.subject }}</button>
+            </div>
             {% endfor %}
         </div>
         <br>
@@ -104,29 +134,29 @@
         <select class="form-control" id="choice_no" name="choice_no" style="background-color:silver;">
             <option value=''>---------- Choose choice here ----------</option>
             {% for c in choice %}
-                <option value= '{{c.poll_choice_id}}'> {{ c.subject }} </option>
+            <option value='{{c.poll_choice_id}}'> {{ c.subject }} </option>
             {% endfor %}
         </select>
         <br>
         <center>
-        <button type="submit" class="btn btn-primary btn-lg">Vote</button>
+            <button type="submit" class="btn btn-primary btn-lg">Vote</button>
         </center>
         <br>
         <div class="container">
-        <center>
-        <button type="button" class="btn btn-primary">
-            {{ choicename1 }} <span class="badge badge-light">{{ count1 }}</span>
-        </button>
+            <center>
+                <button type="button" class="btn btn-primary">
+                    {{ choicename1 }} <span class="badge badge-light">{{ count1 }}</span>
+                </button>
 
-        <button type="button" class="btn btn-primary">
-            {{ choicename2 }} <span class="badge badge-light">{{ count2 }}</span>
-        </button>
+                <button type="button" class="btn btn-primary">
+                    {{ choicename2 }} <span class="badge badge-light">{{ count2 }}</span>
+                </button>
 
-        <button type="button" class="btn btn-primary">
-            {{ choicename3 }} <span class="badge badge-light">{{ count3 }}</span>
-        </button>
-        </center>
+                <button type="button" class="btn btn-primary">
+                    {{ choicename3 }} <span class="badge badge-light">{{ count3 }}</span>
+                </button>
+            </center>
         </div>
     </div>
-  {% endif %} 
-{% endblock %}
+    {% endif %}
+    {% endblock %}

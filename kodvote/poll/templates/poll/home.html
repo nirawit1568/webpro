@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css'%}">
+    <link href="https://fonts.googleapis.com/css?family=Bree+Serif&display=swap" rel="stylesheet">
+</head>
+
+
 <h1>All poll</h1>
 <br><br>
 <div class="container">
@@ -12,38 +20,48 @@
         <div class="row">
             {% for p in pollnow1 %}
             <div class="col-4">
-                <div class="container">
+                <div class="card-body">
                     <center>
-                    <h3>
-                    {{ p.subject }}
-                    </h3>
-                    
-                    {% comment %} concat string {% endcomment %}
-                    {% with 'media/'|add:p.picture as image_static %}
-                        <img src={% static image_static %} style="width:240px;height:250px"/>
-                    {% endwith %}
-                    {% comment %} concat string {% endcomment %}
-                    <br><br>
-                    <a href="{% url 'view_detail' poll_id=p.id %}">
-                    <button class='btn btn-primary' id="{{p.id}}">View</button>
-                    <br><br><br>
-                    </a>
+                        <h3 class="card-title text-center">
+                            {{ p.subject }}
+                        </h3>
+                        {% if p.picture %}
+                        {% comment %} concat string {% endcomment %}
+                        {% with 'media/'|add:p.picture as image_static %}
+                        <img src={% static image_static %} style="width:240px;height:250px" />
+                        {% endwith %}
+                        {% comment %} concat string {% endcomment %}
+                        {% else %}
+                        <img src="{% static 'media/default.png' %}" style="width:240px;height:250px" />
+                        {% endif %}
+                        <br><br>
+                        <a href="{% url 'view_detail' poll_id=p.id %}">
+                            <button class='btn btn-success' id="{{p.id}}">View</button>
+                        </a>
                     </center>
                 </div>
             </div>
             {% endfor %}
             {% for p in pollnow2 %}
             <div class="col-4">
-                <div class="container">
+                <div class="card-body">
                     <center>
-                    <h3>
-                    {{ p.subject }}
-                    </h3>
-                    {% comment %} <img src="{{ p.picture }}"/> {% endcomment %}
-                    <br>
-                    <a href="{% url 'view_detail' poll_id=p.id %}">
-                    <button class='btn btn-primary' id="{{p.id}}">View</button>
-                    </a>
+                        <h3 class="card-title text-center">
+                            {{ p.subject }}
+                        </h3>
+                        {% if p.picture %}
+                        {% comment %} concat string {% endcomment %}
+                        {% with 'media/'|add:p.picture as image_static %}
+                        <img src={% static image_static %} style="width:240px;height:250px" />
+                        {% endwith %}
+                        {% comment %} concat string {% endcomment %}
+                        {% else %}
+                        <img src="{% static 'media/default.png' %}" style="width:240px;height:250px" />
+                        {% endif %}
+                        <br>
+                        <a href="{% url 'view_detail' poll_id=p.id %}">
+                            <button class='btn btn-primary' id="{{p.id}}">View</button>
+                        </a>
                     </center>
                 </div>
             </div>
@@ -58,28 +76,46 @@
         <div class="row">
             {% for p in polllate1 %}
             <div class="col-4">
-                <div class="container">
+                <div class="card-body">
                     <center>
-                    <h3>
-                    {{ p.subject }}
-                    </h3>
-                    <a href="{% url 'view_detail' poll_id=p.id %}">
-                    <button class='btn btn-primary' id="{{p.id}}">View</button>
-                    </a>
+                        <h3 class="card-title text-center">
+                            {{ p.subject }}
+                        </h3>
+                        {% if p.picture %}
+                        {% comment %} concat string {% endcomment %}
+                        {% with 'media/'|add:p.picture as image_static %}
+                        <img src={% static image_static %} style="width:240px;height:250px" />
+                        {% endwith %}
+                        {% comment %} concat string {% endcomment %}
+                        {% else %}
+                        <img src="{% static 'media/default.png' %}" style="width:240px;height:250px" />
+                        {% endif %}
+                        <a href="{% url 'view_detail' poll_id=p.id %}">
+                            <button class='btn btn-primary' id="{{p.id}}">View</button>
+                        </a>
                     </center>
                 </div>
             </div>
             {% endfor %}
             {% for p in polllate2 %}
             <div class="col-4">
-                <div class="container">
+                <div class="card-body">
                     <center>
-                    <h3>
-                    {{ p.subject }}
-                    </h3>
-                    <a href="{% url 'view_detail' poll_id=p.id %}">
-                    <button class='btn btn-primary' id="{{p.id}}">View</button>
-                    </a>
+                        <h3 class="card-title text-center">
+                            {{ p.subject }}
+                        </h3>
+                        {% if p.picture %}
+                        {% comment %} concat string {% endcomment %}
+                        {% with 'media/'|add:p.picture as image_static %}
+                        <img src={% static image_static %} style="width:240px;height:250px" />
+                        {% endwith %}
+                        {% comment %} concat string {% endcomment %}
+                        {% else %}
+                        <img src="{% static 'media/default.png' %}" style="width:240px;height:250px" />
+                        {% endif %}
+                        <a href="{% url 'view_detail' poll_id=p.id %}">
+                            <button class='btn btn-primary' id="{{p.id}}">View</button>
+                        </a>
                     </center>
                 </div>
             </div>
