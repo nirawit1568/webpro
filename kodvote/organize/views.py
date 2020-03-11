@@ -49,7 +49,6 @@ def add_user(request):
 
         new = request.POST.get('username')
         guser = User.objects.filter(username=new)
-        print(guser)
         if guser:
             context['error'] = 'Username have already!'
             print('111111111111')
